@@ -1,0 +1,6 @@
+{
+    "db_url": "sqlite://production-database.sqlite3",
+    "modules": { "models": [
+        "app.db.models"
+    ]}
+}

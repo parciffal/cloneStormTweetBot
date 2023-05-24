@@ -250,6 +250,7 @@ cython_debug/
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/telegram-bot-template.iml
 
+app/config.toml
 config.toml
 migrations/
 *.sqlite3

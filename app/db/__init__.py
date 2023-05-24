@@ -1,31 +1,32 @@
-import contextlib
-import logging
+from tortoise import Tortoise, run_async
+from app.db.models import UserModel
 
-from aerich import Command
-from click import Abort
-from tortoise import Tortoise
+# Define your Tortoise ORM models here
 
 
-async def create_models(tortoise_config: dict):
-    command = Command(tortoise_config=tortoise_config, app="models")
-    await command.init()
-    await command.init_db(safe=True)
-    await command.upgrade()
+async def create_models():
+    # Create the database tables for the defined models
+    await Tortoise.init(db_url="sqlite://production-database.sqlite3", modules={"models": [
+        "app.db.models"
+    ]})
+    await Tortoise.generate_schemas()
 
 
-async def migrate_models(tortoise_config: dict):
-    command = Command(tortoise_config=tortoise_config, app="models")
-    await command.init()
-    with contextlib.suppress(Abort):
-        await command.migrate()
-    await command.upgrade()
+async def migrate_models():
+    # Perform database migrations for the defined models
+    await Tortoise.init(db_url="sqlite://production-database.sqlite3", modules={"models": [
+        "app.db.models"
+    ]})
+    await Tortoise.generate_schemas()
 
 
-async def init_orm(tortoise_config: dict) -> None:
-    await Tortoise.init(config=tortoise_config)
-    logging.info(f"Tortoise-ORM started, {Tortoise.apps}")
+async def init_orm():
+    # Initialize the Tortoise ORM connection
+    await Tortoise.init(db_url="sqlite://production-database.sqlite3", modules={"models": [
+        "app.db.models"
+    ]})
 
 
-async def close_orm() -> None:
+async def close_orm():
+    # Close the Tortoise ORM connection
     await Tortoise.close_connections()
-    logging.info("Tortoise-ORM shutdown")

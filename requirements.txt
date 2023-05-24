@@ -3,7 +3,7 @@ aiogram-dialog==2.0.0b11
 aiogram>=3.0.0b5
 aiohttp~=3.8.4
 aiosqlite
-cachetools~=4.2.4
+cachetools~=5.3.0
 coloredlogs~=15.0.1
 pyrogram>=2.0.0
 redis

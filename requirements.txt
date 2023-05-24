@@ -1,5 +1,5 @@
 aerich~=0.7.1
-aiogram-dialog==2.0.0b11
+aiogram-dialog==2.0.0b18
 aiogram>=3.0.0b5
 aiohttp~=3.8.4
 aiosqlite

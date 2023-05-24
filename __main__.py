@@ -4,12 +4,9 @@ import logging
 import coloredlogs
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram_dialog import DialogRegistry
-
 
 from app.arguments import parse_arguments
 from app.config import parse_config, Config
-from app.dialogs.settings_menu.menu_dialog import menu_ui
 from app.handlers import get_handlers_router
 from app.commands import setup_bot_commands
 from app import db
@@ -25,7 +22,6 @@ async def on_startup(dispatcher: Dispatcher, bot: Bot, config: Config):
     logging.info(f"Username - @{bot_info.username}")
     logging.info(f"ID - {bot_info.id}")
 
-    tortoise_config = config.database.get_tortoise_config()
     await db.init_orm()
 
     states = {
@@ -53,7 +49,6 @@ async def main():
 
     arguments = parse_arguments()
     config = parse_config(arguments.config)
-    tortoise_config = config.database.get_tortoise_config()
     try:
         await db.create_models()
     except FileExistsError:
@@ -68,9 +63,7 @@ async def main():
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 
-    registry = DialogRegistry(dp)
-    registry.register(menu_ui)
-    context_kwargs = {"config": config, "registry": registry}
+    context_kwargs = {"config": config}
 
     await dp.start_polling(bot, **context_kwargs)
 
@@ -79,4 +72,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logging.error("Bot stopped!")
+        logging.warning("Bot stopped!")

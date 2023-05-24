@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery, Message, ContentType
+from aiogram.types import CallbackQuery, Message
 
 from app.db.models import GroupModel
 from app.utils.callback_data.main_menu_cb_data import MenuActions, MainMenuCbData
@@ -24,9 +24,9 @@ async def comment_message_text(message: Message, state: FSMContext):
         await message.delete()
 
         await data['message'].edit_text(
-            f"New comment set!"
-            f"Comment: {group.comments}")
-
+            f"New comment set!\n"
+            f"Comment: <b>{group.comments}</b>",
+            parse_mode="html")
         await data['message'].edit_reply_markup(await edit_comment_kb(group.telegram_id))
     except Exception as e:
         logging.error(e)
@@ -37,7 +37,7 @@ async def change_comment_cb(query: CallbackQuery, callback_data: ChgCommentCbDat
     try:
         await query.message.edit_text("Okay, enter the comment or enter /cancel to abort")
         await state.set_state(ChgCommentState.change_comment)
-        await state.set_data({"group_id": callback_data.user_id,
+        await state.set_data({"group_id": callback_data.group_id,
                               "message": query.message})
     except Exception as e:
         logging.error(e)
@@ -47,7 +47,7 @@ async def change_comment_cb(query: CallbackQuery, callback_data: ChgCommentCbDat
 async def remove_comment_cb(query: CallbackQuery, callback_data: ChgCommentCbData, state: FSMContext):
     try:
         await query.message.edit_text("Comment removed")
-        await query.message.edit_reply_markup(await remove_comment_kb(callback_data.user_id))
+        await query.message.edit_reply_markup(await remove_comment_kb(callback_data.group_id))
     except Exception as e:
         logging.error(e)
 
@@ -58,8 +58,9 @@ async def add_comment_cb(query: CallbackQuery, callback_data: MainMenuCbData, st
         group_data = await GroupModel.get(telegram_id=callback_data.group_id)
         if query.message is not None:
             await query.message.edit_text(
-                f"{group_data.comments}"
-                f"Select an option below to change or remove comment")
+                f"Comment: <b>{group_data.comments}</b>\n"
+                f"Select an option below to change or remove comment",
+                parse_mode="html")
             await query.message.edit_reply_markup(await change_comment_kb(callback_data.group_id))
     except Exception as e:
         logging.error(e)

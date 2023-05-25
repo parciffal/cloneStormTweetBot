@@ -11,7 +11,7 @@ router = Router()
 
 
 @router.callback_query(MainMenuCbData.filter(F.action == MenuActions.FINISH), StateFilter("*"))
-async def retweets_replies_cb(query: CallbackQuery, callback_data: MainMenuCbData, state: FSMContext):
+async def retweets_replies_cb(query: CallbackQuery, state: FSMContext):
     try:
         if query.message:
             await state.clear()

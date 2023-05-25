@@ -1,7 +1,6 @@
 from app.db.models import GroupModel, TemplateModel, AccountModel
 
 
-
 states_def = {
     True: "Enabled",
     False: "Disabled"

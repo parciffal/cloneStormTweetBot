@@ -5,6 +5,7 @@ users_commands = {
     "start": "Settings",
     "enable": "Start receiving alerts",
     "disable": "Stop receiving alerts",
+    "profile": "View my profile"
 }
 
 owner_commands = {**users_commands, "ping": "Check bot ping", "stats": "Show bot stats"}

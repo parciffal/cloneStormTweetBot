@@ -44,7 +44,7 @@ async def change_comment_cb(query: CallbackQuery, callback_data: ChgCommentCbDat
 
 
 @router.callback_query(ChgCommentCbData.filter(F.action == CommentActions.REMOVE_COMMENT))
-async def remove_comment_cb(query: CallbackQuery, callback_data: ChgCommentCbData, state: FSMContext):
+async def remove_comment_cb(query: CallbackQuery, callback_data: ChgCommentCbData):
     try:
         await query.message.edit_text("Comment removed")
         await query.message.edit_reply_markup(await remove_comment_kb(callback_data.group_id))
@@ -53,7 +53,7 @@ async def remove_comment_cb(query: CallbackQuery, callback_data: ChgCommentCbDat
 
 
 @router.callback_query(MainMenuCbData.filter(F.action == MenuActions.ADD_COMMENT))
-async def add_comment_cb(query: CallbackQuery, callback_data: MainMenuCbData, state: FSMContext):
+async def add_comment_cb(query: CallbackQuery, callback_data: MainMenuCbData):
     try:
         group_data = await GroupModel.get(telegram_id=callback_data.group_id)
         if query.message is not None:

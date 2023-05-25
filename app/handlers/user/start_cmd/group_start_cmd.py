@@ -7,7 +7,7 @@ import logging
 from app.config import Config
 from app.keyboards import group_init_keyboard
 from app.filters.start_cmd_filters import GroupFilter
-from app.db.models import UserModel, GroupModel
+
 
 router = Router()
 
@@ -29,4 +29,3 @@ async def start_handler(message: Message, config: Config):
                              reply_markup=keyboard)
     except Exception as e:
         logging.error(e)
-

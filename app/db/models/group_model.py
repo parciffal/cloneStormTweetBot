@@ -19,6 +19,7 @@ class TimeDelayEnum(IntEnum):
 
 class GroupModel(models.Model):
     telegram_id = fields.BigIntField(pk=True)
+    name = fields.TextField(default="", max_length=255)
     comments = fields.TextField(default="")
     show_media = fields.BinaryField(null=True)
     delay = fields.IntEnumField(enum_type=TimeDelayEnum, default=TimeDelayEnum.FIVE)
@@ -31,4 +32,3 @@ class GroupModel(models.Model):
 
     class Meta:
         fields = '__all__'
-

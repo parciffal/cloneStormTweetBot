@@ -10,6 +10,12 @@ class ConfigBot:
     token: str
     username: str
 
+
+@dataclass
+class ConfigOwners:
+    owner_ids: list[int]
+
+
 @dataclass
 class ConfigDatabase:
     models: list[str]
@@ -41,6 +47,7 @@ class ConfigDatabase:
 class Config:
     bot: ConfigBot
     database: ConfigDatabase
+    owners: ConfigOwners
 
     @classmethod
     def parse(cls, data: dict) -> "Config":

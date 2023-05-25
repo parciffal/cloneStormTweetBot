@@ -5,20 +5,7 @@ from app.utils.callback_data.main_menu_cb_data import MenuActions, MainMenuCbDat
 
 
 async def main_menu_kb(user_data: dict) -> InlineKeyboardMarkup:
-    """
-    :param user_data: {
-        "group_id": group.telegram_id,
-        "raid_msg": group.influencers_tweets,
-        "retweets/replies": group.retweets_replies,
-        "comment_raid_msg": True if group.comments else False,
-        "current_comment": group.comments if group.comments else "No comment",
-        "templates_count": len(template_count),
-        "delay": group.delay,
-        "account_count": len(account_count)
-    }
 
-    :return: Main menu keyboard
-    """
     raid_btn_txt = "❌ Influencers Tweets"
     comment_raid_btn_txt = "❌ Retweets/Replies"
 

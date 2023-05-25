@@ -1,7 +1,5 @@
-from tortoise import Tortoise, run_async
+from tortoise import Tortoise
 from app.db.models import UserModel
-
-# Define your Tortoise ORM models here
 
 
 async def create_models():

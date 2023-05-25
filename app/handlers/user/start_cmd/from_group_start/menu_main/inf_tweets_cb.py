@@ -11,7 +11,7 @@ router = Router()
 
 
 @router.callback_query(MainMenuCbData.filter(F.action == MenuActions.CH_INF_TWEETS))
-async def ch_inf_tweets_cb(query: CallbackQuery, callback_data: MainMenuCbData, bot: Bot):
+async def ch_inf_tweets_cb(query: CallbackQuery, callback_data: MainMenuCbData):
     try:
         if await GroupModel.exists(telegram_id=callback_data.group_id):
             user = await GroupModel.get(telegram_id=callback_data.group_id)

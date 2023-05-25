@@ -1,5 +1,4 @@
 from tortoise import fields, models
-from .group_model import GroupModel
 
 
 class AccountModel(models.Model):

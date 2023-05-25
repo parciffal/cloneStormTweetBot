@@ -10,5 +10,4 @@ def get_start_router() -> Router:
     router.include_router(from_group_router)
     router.include_router(private_start_cmd.router)
 
-
     return router

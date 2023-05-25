@@ -57,7 +57,7 @@ async def show_account_kb(group_id: int) -> InlineKeyboardMarkup:
 async def remove_account_kb(accounts: List[AccountModel], group_id: int) -> InlineKeyboardMarkup:
     account_buttons = [
         InlineKeyboardButton(text=i.name,
-                              callback_data=AddAccountCbData(
+                             callback_data=AddAccountCbData(
                                 action=AccountActions.REMOVE_ACCOUNT,
                                 group_id=group_id,
                                 account_id=i.id

@@ -6,13 +6,13 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from app.arguments import parse_arguments
-from app.config import parse_config, Config
+from app.config import parse_config
 from app.handlers import get_handlers_router
 from app.commands import setup_bot_commands
 from app import db
 
 
-async def on_startup(dispatcher: Dispatcher, bot: Bot, config: Config):
+async def on_startup(dispatcher: Dispatcher, bot: Bot):
 
     dispatcher.include_router(get_handlers_router())
     await setup_bot_commands(bot)
@@ -36,7 +36,7 @@ async def on_startup(dispatcher: Dispatcher, bot: Bot, config: Config):
 
 async def on_shutdown(dispatcher: Dispatcher, bot: Bot):
     logging.warning("Stopping bot...")
-    #await remove_bot_commands(bot)
+    # await remove_bot_commands(bot)
     await dispatcher.fsm.storage.close()
     await bot.session.close()
     await db.close_orm()

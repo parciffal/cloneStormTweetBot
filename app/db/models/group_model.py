@@ -22,6 +22,7 @@ class GroupModel(models.Model):
     name = fields.TextField(default="", max_length=255)
     comments = fields.TextField(default="")
     show_media = fields.BinaryField(null=True)
+    media = fields.TextField(default="")
     delay = fields.IntEnumField(enum_type=TimeDelayEnum, default=TimeDelayEnum.FIVE)
 
     receiving_alerts = fields.BooleanField(default=False)

@@ -2,9 +2,9 @@ from typing import List
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from app.db.all_in_one_models import AccountModel
-from app.utils.callback_data.main_menu_cb_data import MenuActions, MainMenuCbData
-from app.utils.callback_data.add_account_cb_data import AccountActions, AddAccountCbData
+from app.db.models import AccountModel
+from app.utils.callback_data import MenuActions, MainMenuCbData
+from app.utils.callback_data import AccountActions, AddAccountCbData
 
 
 async def add_account_kb(group_id: int) -> InlineKeyboardMarkup:

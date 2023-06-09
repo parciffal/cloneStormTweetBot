@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 
 from app.filters.start_cmd_filters import FromGroupFilter
-from app.utils.callback_data.private_start_cb_data import PrivateStartCallback, PrivateActions
+from app.utils.callback_data import PrivateStartCallback, PrivateActions
 from app.keyboards.inline_keyboards.main_menu_kb import main_menu_kb
 from app.utils.tools import get_user_data, states_def
 
@@ -37,7 +37,7 @@ async def group_settings_cb(query: CallbackQuery, callback_data: PrivateStartCal
 
 @router.message(Command(commands=['start']), FromGroupFilter())
 async def start_handler(message: Message):
-    try:
+    #try:
         group_id = message.text.split(" ")[1]
         group_data = await get_user_data(int(group_id))
 
@@ -54,5 +54,5 @@ async def start_handler(message: Message):
                 f"To remove delete bot from Group",
                 parse_mode="HTML",
                 reply_markup=keyboard)
-    except Exception as e:
-        logging.error(e)
+    #except Exception as e:
+    #    logging.error(e)

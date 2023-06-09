@@ -4,10 +4,10 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
 from app.db.models import GroupModel
-from app.utils.callback_data.main_menu_cb_data import MenuActions, MainMenuCbData
-from app.utils.callback_data.chg_comnt_cb_data import CommentActions, ChgCommentCbData
+from app.utils.callback_data import MenuActions, MainMenuCbData
+from app.utils.callback_data import CommentActions, ChgCommentCbData
 from app.keyboards.inline_keyboards.main_menu_kb import change_comment_kb, edit_comment_kb, remove_comment_kb
-from app.utils.states.chg_comnt_state import ChgCommentState
+from app.utils.states.user_states import ChgCommentState
 import logging
 
 router = Router()

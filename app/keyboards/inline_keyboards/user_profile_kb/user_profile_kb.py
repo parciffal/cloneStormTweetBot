@@ -2,8 +2,8 @@ from typing import List
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from app.utils.callback_data.main_menu_cb_data import MainMenuCbData, MenuActions
-from app.utils.callback_data.private_start_cb_data import PrivateStartCallback, PrivateActions
+from app.utils.callback_data import MainMenuCbData, MenuActions
+from app.utils.callback_data import PrivateStartCallback, PrivateActions
 from app.db.models import GroupModel
 
 

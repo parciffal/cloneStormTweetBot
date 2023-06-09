@@ -9,7 +9,6 @@ from app.config import Config
 from app.keyboards import first_start_keyboard
 from app.filters.start_cmd_filters import PrivateChatFilter, UserProfileFilter
 from app.keyboards.inline_keyboards.user_profile_kb.user_profile_kb import user_profile_kb
-from app.utils.callback_data.private_start_cb_data import PrivateStartCallback
 from app.db.models import UserModel, GroupModel
 
 router = Router()
@@ -18,8 +17,8 @@ router = Router()
 @router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=MEMBER >> IS_NOT_MEMBER))
 async def bot_removed_as_member(event: ChatMemberUpdated, bot: Bot):
     try:
-        print("Group deleted from db")
         if await GroupModel.exists(telegram_id=event.chat.id):
+            logging.warning("Group removed")
             group = await GroupModel.get(telegram_id=event.chat.id)
             await group.delete()
     except Exception as e:
@@ -30,18 +29,17 @@ async def bot_removed_as_member(event: ChatMemberUpdated, bot: Bot):
 async def bot_added_as_member(event: ChatMemberUpdated, bot: Bot):
     try:
         chat_info = await bot.get_chat(event.chat.id)
-        if bool(chat_info.permissions.can_send_messages):
-            if not await GroupModel.exists(telegram_id=event.chat.id):
-                if await UserModel.exists(telegram_id=event.from_user.id):
-                    print(f"Group {event.chat.title} added to db")
-                    user = await UserModel.get(telegram_id=event.from_user.id,
-                                               name=event.from_user.username)
-                    group = await GroupModel.create(telegram_id=event.chat.id,
-                                                    name=event.chat.title,
-                                                    user=user)
-                    await group.save()
-                else:
-                    await bot.send_message(event.from_user.id, f"Bot is already in group")
+        if not await GroupModel.exists(telegram_id=event.chat.id):
+            if await UserModel.exists(telegram_id=event.from_user.id):
+                print(f"Group {event.chat.title} added to db")
+                user = await UserModel.get(telegram_id=event.from_user.id)
+                group = await GroupModel.create(telegram_id=event.chat.id,
+                                                name=event.chat.title,
+                                                user=user)
+                print(group.telegram_id)
+                await group.save()
+            else:
+                await bot.send_message(event.from_user.id, f"Bot is already in group")
     except Exception as e:
         logging.error(e)
 
@@ -70,15 +68,15 @@ async def start_handler(message: Message, config: Config):
 
 @router.message(Command(commands=['profile']), UserProfileFilter())
 async def user_profile_cmd(message: Message, config: Config):
-    #try:
-    user = await UserModel.get(telegram_id=message.chat.id)
-    groups = await GroupModel.filter(user=user)
-    keyboard = await user_profile_kb(groups, message.chat.id)
-    await message.answer(
-        text=
-        f"User: {user.name}\n"
-        f"Choose group to set\n",
-        reply_markup=keyboard)
-    """except Exception as e:
+    try:
+        user = await UserModel.get(telegram_id=message.chat.id)
+        groups = await GroupModel.filter(user=user)
+        keyboard = await user_profile_kb(groups, message.chat.id)
+        await message.answer(
+            text=
+            f"User: {user.name}\n"
+            f"Choose group to set\n",
+            reply_markup=keyboard)
+    except Exception as e:
         logging.error("User Profile")
-        logging.error(e)"""
+        logging.error(e)

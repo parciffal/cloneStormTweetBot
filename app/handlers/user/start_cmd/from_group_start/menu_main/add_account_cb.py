@@ -4,10 +4,10 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
 from app.db.models import GroupModel, AccountModel
-from app.utils.callback_data.main_menu_cb_data import MenuActions, MainMenuCbData
-from app.utils.callback_data.add_account_cb_data import AccountActions, AddAccountCbData
+from app.utils.callback_data import MenuActions, MainMenuCbData
+from app.utils.callback_data import AccountActions, AddAccountCbData
 
-from app.utils.states.add_account_state import AddAccountState
+from app.utils.states.user_states import AddAccountState
 
 from app.keyboards.inline_keyboards.main_menu_kb import show_account_kb, remove_account_kb, add_account_kb
 

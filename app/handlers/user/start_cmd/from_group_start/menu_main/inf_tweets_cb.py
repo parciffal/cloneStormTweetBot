@@ -3,7 +3,7 @@ from aiogram.types import CallbackQuery
 
 from app.db.models import GroupModel
 from app.keyboards.inline_keyboards.main_menu_kb import return_kb
-from app.utils.callback_data.main_menu_cb_data import MainMenuCbData, MenuActions
+from app.utils.callback_data import MainMenuCbData, MenuActions
 
 import logging
 

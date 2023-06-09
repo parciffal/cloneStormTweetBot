@@ -1,8 +1,8 @@
 from aiogram.types.inline_keyboard_markup import InlineKeyboardMarkup
 from aiogram.types.inline_keyboard_button import InlineKeyboardButton
 
-from app.utils.callback_data.main_menu_cb_data import MenuActions, MainMenuCbData
-from app.utils.callback_data.change_delay_cb_data import DelayEnum, ChgDelayCbData
+from app.utils.callback_data import MenuActions, MainMenuCbData
+from app.utils.callback_data import DelayEnum, ChgDelayCbData
 
 
 async def change_delay_kb(group_id: int) -> InlineKeyboardMarkup:

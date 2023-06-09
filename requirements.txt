@@ -2,7 +2,7 @@ aerich~=0.7.1
 aiogram==3.0.0b5
 aiohttp~=3.8.4
 aiosqlite==0.19.0
-cachetools==5.3.0
+cachetools==5.3.1
 coloredlogs>=15.0.1
 pyrogram>=2.0.0
 redis

@@ -10,5 +10,5 @@ tgcrypto
 toml~=0.10.2
 tortoise-orm
 click~=8.1.3
-Django~=4.2.1
+Django~=4.2.4
 aiofiles==23.1.0
